@@ -1,0 +1,1636 @@
+/* ==========================================================================
+   TCET Mumbai
+   Clean academic UI faithfully matching the 7-page rough sketch wireframes
+   plus dedicated Teacher & Administrator dashboards.
+   ========================================================================== */
+
+:root {
+  --bg: #eef4f8;
+  --surface: #ffffff;
+  --surface-soft: #f7fafc;
+  --border: #cbd5e1;
+  --border-strong: #1e40af;
+  --text: #0f172a;
+  --muted: #475569;
+
+  /* Role-specific accent tokens */
+  --student-primary: #1d4ed8;
+  --student-soft: #dbeafe;
+  --teacher-primary: #0f766e;
+  --teacher-soft: #ccfbf1;
+  --admin-primary: #b45309;
+  --admin-soft: #fef3c7;
+
+  /* Status colors */
+  --present-bg: #dcfce7;
+  --present-text: #166534;
+  --absent-bg: #fee2e2;
+  --absent-text: #991b1b;
+  --cancelled-bg: #f1f5f9;
+  --cancelled-text: #475569;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+  --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 10px 30px rgba(15, 23, 42, 0.12);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ==========================================================================
+   LOGIN SCREEN
+   ========================================================================== */
+.login-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: linear-gradient(135deg, #e0ecff 0%, #eef4f8 50%, #e6f6f4 100%);
+}
+
+.login-card {
+  width: 100%;
+  max-width: 960px;
+  background: var(--surface);
+  border-radius: 24px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid #dbe4f0;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+}
+
+.login-brand {
+  background: linear-gradient(160deg, #0f172a 0%, #1e3a8a 60%, #1d4ed8 100%);
+  color: #ffffff;
+  padding: 40px 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.brand-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-logo-box {
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.brand-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.brand-sub {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: #bfdbfe;
+}
+
+.brand-hero h2 {
+  margin: 0 0 10px;
+  font-size: 28px;
+  line-height: 1.2;
+}
+
+.brand-hero p {
+  margin: 0;
+  color: #dbeafe;
+  font-size: 14px;
+}
+
+.demo-box {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 14px;
+  padding: 14px 16px;
+  font-size: 13px;
+}
+
+.demo-box-title {
+  font-weight: 700;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.demo-quick-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.demo-btn {
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.demo-btn:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.login-form-pane {
+  padding: 36px 34px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.role-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  background: #f1f5f9;
+  padding: 5px;
+  border-radius: 12px;
+  margin-bottom: 22px;
+}
+
+.role-tab {
+  border: none;
+  background: transparent;
+  padding: 10px 8px;
+  border-radius: 9px;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.role-tab.active-student {
+  background: var(--student-primary);
+  color: #ffffff;
+  box-shadow: var(--shadow-sm);
+}
+
+.role-tab.active-teacher {
+  background: var(--teacher-primary);
+  color: #ffffff;
+  box-shadow: var(--shadow-sm);
+}
+
+.role-tab.active-admin {
+  background: var(--admin-primary);
+  color: #ffffff;
+  box-shadow: var(--shadow-sm);
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-size: 14px;
+  background: #ffffff;
+  color: var(--text);
+  transition: border-color 0.15s;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--student-primary);
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+  background: var(--student-primary);
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.1s;
+}
+
+.btn-primary:hover {
+  opacity: 0.93;
+}
+
+.btn-primary:active {
+  transform: scale(0.99);
+}
+
+.btn-teacher {
+  background: var(--teacher-primary);
+}
+
+.btn-admin {
+  background: var(--admin-primary);
+}
+
+.btn-outline {
+  padding: 8px 14px;
+  border-radius: 9px;
+  border: 1.5px solid var(--border);
+  background: #ffffff;
+  color: var(--text);
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.btn-outline:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+}
+
+.login-error {
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+  border-radius: 9px;
+  padding: 9px 12px;
+  font-size: 13px;
+  margin-bottom: 14px;
+}
+
+.db-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 11px;
+  border-radius: var(--radius-pill);
+  background: #dcfce7;
+  color: #166534;
+}
+
+.db-badge.cloud {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.db-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: pulseDot 1.8s infinite;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.45; transform: scale(0.82); }
+}
+
+/* ==========================================================================
+   ERP SHELL (Matching Sketch Wireframe: Top Header + Left Sidebar + Main)
+   ========================================================================== */
+.erp-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 230px 1fr;
+  grid-template-rows: 74px 1fr;
+  background: var(--bg);
+}
+
+.erp-shell.role-teacher {
+  --active-primary: var(--teacher-primary);
+  --active-soft: var(--teacher-soft);
+}
+
+.erp-shell.role-admin {
+  --active-primary: var(--admin-primary);
+  --active-soft: var(--admin-soft);
+}
+
+.erp-shell.role-student {
+  --active-primary: var(--student-primary);
+  --active-soft: var(--student-soft);
+}
+
+/* Top-Left Logo Cell (Sketch: square graduation cap box above sidebar) */
+.erp-logo-cell {
+  background: var(--surface);
+  border-right: 1.5px solid var(--border);
+  border-bottom: 1.5px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 14px;
+}
+
+.sketch-logo-square {
+  width: 46px;
+  height: 46px;
+  border: 2px solid var(--active-primary, #1d4ed8);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--active-primary, #1d4ed8);
+  background: var(--active-soft, #dbeafe);
+  flex-shrink: 0;
+}
+
+.logo-text-stack {
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-text-stack strong {
+  font-size: 14px;
+  line-height: 1.1;
+  color: var(--text);
+}
+
+.logo-text-stack span {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+/* Top-Right Header Bar (Sketch: Centered Page Title + Right Profile Pill) */
+.erp-topbar {
+  background: var(--surface);
+  border-bottom: 1.5px solid var(--border);
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.topbar-left-mobile {
+  display: none;
+}
+
+.topbar-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--active-primary, #1d4ed8);
+  letter-spacing: -0.01em;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Sketch Profile Pill Button */
+.profile-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 6px 16px 6px 8px;
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--active-primary, #1d4ed8);
+  background: #ffffff;
+  color: var(--active-primary, #1d4ed8);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.profile-pill-btn:hover {
+  background: var(--active-soft, #dbeafe);
+}
+
+.profile-pill-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--active-primary, #1d4ed8);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Left Sidebar (Sketch: vertical menu with active item circled in pill) */
+.erp-sidebar {
+  background: var(--surface);
+  border-right: 1.5px solid var(--border);
+  padding: 20px 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nav-item {
+  width: 100%;
+  text-align: left;
+  padding: 11px 16px;
+  border-radius: var(--radius-pill);
+  border: 2px solid transparent;
+  background: transparent;
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.15s;
+}
+
+.nav-item:hover {
+  background: #f1f5f9;
+}
+
+.nav-item.active {
+  border-color: var(--active-primary, #1d4ed8);
+  background: var(--active-soft, #dbeafe);
+  color: var(--active-primary, #1d4ed8);
+  font-weight: 700;
+}
+
+.sidebar-footer {
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.logout-btn {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1.5px solid #fecaca;
+  background: #fef2f2;
+  color: #b91c1c;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.logout-btn:hover {
+  background: #fee2e2;
+}
+
+/* Main Content Area */
+.erp-main {
+  padding: 24px 28px 36px;
+  overflow-x: hidden;
+}
+
+/* ==========================================================================
+   COMMON CARDS & WIREFRAME COMPONENTS
+   ========================================================================== */
+.card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+.card-title {
+  margin: 0 0 14px;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--active-primary, #1d4ed8);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+/* ==========================================================================
+   STUDENT DASHBOARD (Sketch Page 2 Top)
+   ========================================================================== */
+.greeting-block {
+  margin-bottom: 18px;
+}
+
+.greeting-block h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.greeting-block p {
+  margin: 2px 0 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1.85fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.dashboard-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Upcoming Submissions inner split */
+.submissions-split {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 18px;
+}
+
+.day-sub-block {
+  margin-bottom: 12px;
+}
+
+.day-sub-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+  margin-bottom: 5px;
+}
+
+.day-sub-box {
+  border: 1.5px solid var(--student-primary);
+  background: #f8fbff;
+  border-radius: 9px;
+  padding: 9px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.day-sub-box.empty {
+  border-color: var(--border);
+  color: var(--muted);
+  background: #f8fafc;
+}
+
+.period-sub-group {
+  margin-bottom: 12px;
+}
+
+.period-sub-group h4 {
+  margin: 0 0 6px;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--student-primary);
+}
+
+.period-sub-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13.5px;
+  padding: 4px 0;
+  border-bottom: 1px dashed #e2e8f0;
+}
+
+/* Tomorrow's Timetable rows */
+.tomorrow-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 12px;
+  border-radius: 9px;
+  background: var(--surface-soft);
+  margin-bottom: 8px;
+  font-size: 14.5px;
+}
+
+.tomorrow-row strong {
+  color: var(--text);
+}
+
+.tomorrow-row span {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: var(--student-primary);
+}
+
+/* Attendance quick list on dashboard */
+.mini-att-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: background 0.15s;
+  font-size: 14.5px;
+}
+
+.mini-att-row:hover {
+  background: var(--student-soft);
+}
+
+.pct-pill {
+  font-weight: 800;
+  font-size: 13.5px;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+}
+
+.pct-high { background: #dcfce7; color: #166534; }
+.pct-mid  { background: #fef3c7; color: #92400e; }
+.pct-low  { background: #fee2e2; color: #991b1b; }
+
+/* Announcement pills (Dashboard + Announcements tab) */
+.announcement-pill {
+  width: 100%;
+  text-align: left;
+  padding: 12px 16px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--student-primary);
+  background: #f8fbff;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.announcement-pill:hover {
+  background: var(--student-soft);
+  transform: translateX(2px);
+}
+
+.announcement-pill small {
+  color: var(--muted);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   TIME TABLE (Sketch Page 2 Bottom — with Horizontal Slider)
+   ========================================================================== */
+.timetable-layout {
+  display: grid;
+  grid-template-columns: 2.15fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.tt-scroll-viewport {
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.tt-grid-table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: separate;
+  border-spacing: 8px;
+}
+
+.tt-grid-table th {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--student-primary);
+  padding: 6px 8px;
+  text-align: center;
+}
+
+.tt-day-cell {
+  font-weight: 800;
+  color: var(--text);
+  font-size: 14px;
+  width: 60px;
+  text-align: left;
+}
+
+.tt-slot-box {
+  border: 1.5px solid var(--student-primary);
+  background: #f8fbff;
+  border-radius: 10px;
+  padding: 8px 10px;
+  text-align: center;
+  min-height: 54px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.tt-slot-box strong {
+  font-size: 13.5px;
+  color: var(--text);
+}
+
+.tt-slot-box span {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.tt-slot-empty {
+  border: 1px dashed #cbd5e1;
+  border-radius: 10px;
+  min-height: 54px;
+  background: #f8fafc;
+}
+
+/* Sketch Bottom Horizontal Slider */
+.slider-control-bar {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--student-primary);
+}
+
+.slider-control-bar input[type="range"] {
+  flex: 1;
+  accent-color: var(--student-primary);
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   ANNOUNCEMENTS (Sketch Page 3 Top)
+   ========================================================================== */
+.announcements-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+
+.column-header-rule {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--student-primary);
+  padding-bottom: 10px;
+  margin: 0 0 14px;
+  border-bottom: 2px solid var(--student-primary);
+}
+
+/* ==========================================================================
+   EXAMS (Sketch Page 3 Bottom & Page 4 Bottom)
+   ========================================================================== */
+.exams-layout {
+  display: grid;
+  grid-template-columns: 1.85fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.exam-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.exam-box-btn {
+  border: 2px solid var(--student-primary);
+  background: #f8fbff;
+  border-radius: 12px;
+  padding: 18px 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.exam-box-btn:hover {
+  background: var(--student-soft);
+  transform: translateY(-2px);
+}
+
+.exam-box-btn.full-span {
+  grid-column: 1 / -1;
+}
+
+.exam-box-label {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.exam-box-score {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--student-primary);
+}
+
+.overall-big-card {
+  text-align: center;
+  padding: 24px 18px;
+}
+
+.overall-big-card .big-pct {
+  font-size: 46px;
+  font-weight: 900;
+  color: var(--student-primary);
+  line-height: 1.1;
+  margin-top: 6px;
+}
+
+/* ==========================================================================
+   SYLLABUS (Sketch Page 5 Top & Page 6 Top)
+   ========================================================================== */
+.syllabus-top-action {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.btn-pdf-view {
+  border: 2px solid var(--student-primary);
+  background: #ffffff;
+  color: var(--student-primary);
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-size: 14.5px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-pdf-view:hover {
+  background: var(--student-primary);
+  color: #ffffff;
+}
+
+.syllabus-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.clickable-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.clickable-table th {
+  text-align: left;
+  padding: 10px 12px;
+  font-size: 14px;
+  color: var(--student-primary);
+  border-bottom: 2px solid var(--student-primary);
+}
+
+.clickable-table th.right,
+.clickable-table td.right {
+  text-align: right;
+}
+
+.clickable-table tbody tr {
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.clickable-table tbody tr:hover {
+  background: var(--student-soft);
+}
+
+.clickable-table td {
+  padding: 12px;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   ATTENDANCE (Sketch Page 5 Bottom & Page 6 Bottom — with Vertical Slider)
+   ========================================================================== */
+.attendance-main-card {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 26px 30px;
+}
+
+.attendance-overall-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+  margin-bottom: 14px;
+  border-bottom: 2px solid var(--student-primary);
+}
+
+.attendance-overall-row h3 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.attendance-overall-row .overall-num {
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--student-primary);
+}
+
+.attendance-subject-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+  margin-bottom: 6px;
+}
+
+.attendance-subject-row:hover {
+  background: var(--student-soft);
+  border-color: var(--student-primary);
+}
+
+.attendance-subject-row span:first-child {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.attendance-subject-row span:last-child {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--student-primary);
+}
+
+/* Attendance Detail Modal with Left Vertical Slider (Sketch Page 6 Bottom) */
+.att-detail-layout {
+  display: grid;
+  grid-template-columns: 38px 1fr;
+  gap: 14px;
+  align-items: stretch;
+}
+
+.vertical-slider-rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #f1f5f9;
+  border-radius: 10px;
+  padding: 10px 4px;
+}
+
+.vertical-slider-rail input[type="range"] {
+  writing-mode: vertical-lr;
+  direction: ltr;
+  height: 240px;
+  width: 24px;
+  accent-color: var(--student-primary);
+  cursor: pointer;
+}
+
+.att-detail-scroll {
+  max-height: 290px;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 11px;
+  border-radius: var(--radius-pill);
+  font-size: 12.5px;
+  font-weight: 700;
+}
+
+.status-Present   { background: var(--present-bg); color: var(--present-text); }
+.status-Absent    { background: var(--absent-bg); color: var(--absent-text); }
+.status-Cancelled { background: var(--cancelled-bg); color: var(--cancelled-text); }
+
+/* ==========================================================================
+   MODAL OVERLAY & SPECIFIC MODALS (Pages 4, 6, 7)
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.52);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 1000;
+}
+
+.modal-box {
+  background: var(--surface);
+  border: 2px solid var(--student-primary);
+  border-radius: 18px;
+  width: 100%;
+  max-width: 660px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 26px 28px;
+  box-shadow: var(--shadow-md);
+  animation: modalIn 0.16s ease-out;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1.5px solid var(--border);
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 21px;
+  font-weight: 800;
+  color: var(--student-primary);
+}
+
+.modal-close-btn {
+  border: 1.5px solid var(--border);
+  background: #f8fafc;
+  color: var(--text);
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.modal-close-btn:hover {
+  background: #e2e8f0;
+}
+
+/* Exam Detail Modal Grid (Sketch Page 4 Bottom: 3 top, 2 middle, 1 overall) */
+.exam-detail-row-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.exam-detail-row-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  max-width: 420px;
+  margin: 0 auto 18px;
+}
+
+.exam-sub-card {
+  border: 1.5px solid var(--student-primary);
+  border-radius: 10px;
+  padding: 14px;
+  text-align: center;
+  background: #f8fbff;
+}
+
+.exam-sub-card .sub-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.exam-sub-card .sub-val {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text);
+  margin-top: 4px;
+}
+
+.exam-overall-box {
+  border: 2px solid var(--student-primary);
+  border-radius: 12px;
+  padding: 18px;
+  max-width: 280px;
+  margin: 0 auto;
+  text-align: center;
+  background: var(--student-soft);
+}
+
+/* Profile Modal (Sketch Page 7) */
+.profile-modal-grid {
+  display: grid;
+  grid-template-columns: 165px 1fr;
+  gap: 24px;
+  align-items: center;
+}
+
+.profile-avatar-wrap {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin: 0 auto;
+}
+
+.profile-avatar-circle {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 3px solid var(--student-primary);
+  background: var(--student-soft);
+  color: var(--student-primary);
+  font-size: 46px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-edit-pencil {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  background: var(--student-primary);
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.profile-field-pill {
+  border: 1.5px solid var(--student-primary);
+  border-radius: 12px;
+  padding: 9px 14px;
+  font-size: 15px;
+  font-weight: 700;
+  background: #f8fbff;
+  margin-bottom: 12px;
+}
+
+/* ==========================================================================
+   TEACHER & ADMIN PORTAL SPECIFIC CONTROLS
+   ========================================================================== */
+.kpi-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.kpi-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 18px;
+}
+
+.kpi-card small {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.kpi-card .kpi-val {
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--active-primary);
+  margin-top: 4px;
+}
+
+.toolbar-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+  margin-bottom: 18px;
+}
+
+.toolbar-row .form-group {
+  margin-bottom: 0;
+  min-width: 160px;
+  flex: 1;
+}
+
+.att-toggle-group {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.att-toggle-btn {
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  background: #ffffff;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.att-toggle-btn.selected-Present   { background: var(--present-bg); color: var(--present-text); border-color: #16a34a; }
+.att-toggle-btn.selected-Absent    { background: var(--absent-bg); color: var(--absent-text); border-color: #dc2626; }
+.att-toggle-btn.selected-Cancelled { background: var(--cancelled-bg); color: var(--cancelled-text); border-color: #64748b; }
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table th, .data-table td {
+  padding: 11px 12px;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 14px;
+}
+
+.data-table th {
+  background: #f8fafc;
+  font-weight: 800;
+  color: var(--muted);
+  font-size: 12.5px;
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   TOAST NOTIFICATIONS
+   ========================================================================== */
+.toast-container {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 1200;
+  max-width: 360px;
+}
+
+.toast {
+  background: #0f172a;
+  color: #ffffff;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 13.5px;
+  font-weight: 600;
+  box-shadow: var(--shadow-md);
+  border-left: 4px solid #38bdf8;
+  animation: toastIn 0.2s ease-out;
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ==========================================================================
+   RESPONSIVE BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 900px) {
+  .login-card {
+    grid-template-columns: 1fr;
+  }
+  .erp-shell {
+    grid-template-columns: 1fr;
+    grid-template-rows: 64px auto 1fr;
+  }
+  .erp-logo-cell {
+    display: none;
+  }
+  .erp-sidebar {
+    border-right: none;
+    border-bottom: 1.5px solid var(--border);
+    padding: 10px 14px;
+    flex-direction: row;
+    overflow-x: auto;
+  }
+  .sidebar-nav {
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+  .nav-item {
+    white-space: nowrap;
+    padding: 8px 14px;
+    font-size: 13.5px;
+  }
+  .sidebar-footer {
+    display: none;
+  }
+  .dashboard-grid,
+  .timetable-layout,
+  .announcements-grid,
+  .exams-layout,
+  .syllabus-layout,
+  .profile-modal-grid,
+  .submissions-split {
+    grid-template-columns: 1fr;
+  }
+  .kpi-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .exam-detail-row-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   STUDY TIMER (YPT — Yeolpumta Style, matching TCET Student Portal theme)
+   ========================================================================== */
+.ypt-mode-bar {
+  display: inline-flex;
+  background: #f1f5f9;
+  padding: 4px;
+  border-radius: var(--radius-pill);
+  gap: 4px;
+}
+
+.ypt-mode-btn {
+  border: none;
+  background: transparent;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.ypt-mode-btn.active {
+  background: var(--student-primary);
+  color: #ffffff;
+}
+
+.ypt-timer-stage {
+  background: #f8fbff;
+  border: 2px solid var(--student-primary);
+  border-radius: 16px;
+  padding: 22px 20px;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.ypt-active-sub-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  background: var(--student-soft);
+  color: var(--student-primary);
+  font-size: 12.5px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.ypt-clock {
+  font-size: 46px;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  color: var(--text);
+  line-height: 1.15;
+  margin: 4px 0 14px;
+}
+
+.ypt-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.ypt-controls .btn-primary {
+  width: auto;
+  padding: 10px 22px;
+  font-size: 14px;
+}
+
+.ypt-subject-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 14px;
+  border-radius: 12px;
+  border: 1.5px solid #e2e8f0;
+  background: #ffffff;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.ypt-subject-row:hover {
+  border-color: var(--student-primary);
+  background: #f8fbff;
+}
+
+.ypt-subject-row.active {
+  border-color: var(--student-primary);
+  background: var(--student-soft);
+}
+
+.ypt-sub-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ypt-play-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--student-primary);
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.ypt-sub-time {
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--student-primary);
+}
+
+.ypt-progress-track {
+  width: 100%;
+  height: 10px;
+  background: #e2e8f0;
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  margin: 10px 0 6px;
+}
+
+.ypt-progress-fill {
+  height: 100%;
+  background: var(--student-primary);
+  border-radius: var(--radius-pill);
+  transition: width 0.25s ease;
+}
+
+.ypt-group-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 11px;
+  background: var(--surface-soft);
+  border: 1px solid #e2e8f0;
+  margin-bottom: 8px;
+}
+
+.ypt-group-row.is-me {
+  background: #eff6ff;
+  border-color: var(--student-primary);
+}
+
+.ypt-rank-badge {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--student-soft);
+  color: var(--student-primary);
+  font-weight: 800;
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ypt-status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.ypt-status-studying { background: #16a34a; }
+.ypt-status-break    { background: #d97706; }
+.ypt-status-offline  { background: #94a3b8; }
+
+.ypt-todo-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 8px;
+  background: #ffffff;
+}
+
+.ypt-todo-item.done span.todo-title {
+  text-decoration: line-through;
+  color: var(--muted);
+}
+
+.ypt-focus-overlay {
+  text-align: center;
+  padding: 18px 10px;
+}
+
+.ypt-focus-overlay .ypt-clock {
+  font-size: 56px;
+  color: var(--student-primary);
+  margin: 16px 0 22px;
+}
+
+/* Custom Uploaded TCET Logo Styling */
+.brand-logo-box {
+  background: #ffffff;
+  padding: 4px;
+  overflow: hidden;
+}
+
+.sketch-logo-square {
+  width: 52px;
+  height: 52px;
+  background: #ffffff;
+  padding: 3px;
+  overflow: hidden;
+}
+
+.tcet-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
